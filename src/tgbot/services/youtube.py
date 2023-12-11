@@ -31,8 +31,7 @@ class YouTube:
 
     def __init__(self) -> None:
         """Loads ffmpeg binaries and adds their parameters"""
-        path_to_ffmpeg: str | None = self._get_path_to_ffmpeg()
-        if path_to_ffmpeg:
+        if path_to_ffmpeg := self._get_path_to_ffmpeg():
             self._path_to_ffmpeg = path_to_ffmpeg
         else:
             logger.critical("The path to the ffmpeg file was not found, or ffmpeg is not installed")
@@ -98,7 +97,8 @@ class YouTube:
         try:
             found_videos: list[VideoInfo] = []
             search_results: dict = ydl.extract_info(
-                f"ytsearch{10}:{self._remove_unwanted_chars(string=query)}", download=False
+                f"ytsearch10:{self._remove_unwanted_chars(string=query)}",
+                download=False,
             )
             count: int = 0
             for video in search_results["entries"]:
